@@ -54,3 +54,5 @@ async function addBook() {
 
 // Load all books when page loads
 document.addEventListener('DOMContentLoaded', getBooks);
+
+
