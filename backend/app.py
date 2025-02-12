@@ -2,8 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime, timedelta
 from models import db
-from models.customer import User
-# from models.book import Book
+from models.customer import Coustomer 
+from models.admin import Admin
+from models.game import Game
 from models.loans import Loan
 
 
@@ -34,7 +35,6 @@ db.init_app(app)  # initializes the databsewith the flask application
 #     db.session.add(new_book)  # add the bew book to the database session
 #     db.session.commit()  # commit the session to save in the database
 #     return jsonify({'message': 'Book added to database.'}), 201
-
 
 # # a decorator to Define a new route that handles GET requests
 # @app.route('/books', methods=['GET'])
@@ -68,9 +68,9 @@ db.init_app(app)  # initializes the databsewith the flask application
 #         }), 500                                    #
 
 
-# if __name__ == '__main__':
-#     with app.app_context():
-#         db.create_all()  # Create all database tables defined in your  models(check the models folder)
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Create all database tables defined in your  models(check the models folder)
 
 #     # with app.test_client() as test:
 #     #     response = test.post('/books', json={  # Make a POST request to /books endpoint with book  data
