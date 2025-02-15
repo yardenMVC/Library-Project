@@ -2,13 +2,12 @@
 
 from . import db
 
-class Coustomer(db.Model):
+class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-    phone_number = db.Column(db.String(10), nullable=False)
-    city = db.Column(db.String(50), nullable=False)
-    age = db.Column(db.Integer, nullable=True)
-    # loan_id = db.Column()
+    email=db.Column(db.String(50),nullable=False)
+    phone = db.Column(db.String(10), nullable=False)
+
 
 
 
