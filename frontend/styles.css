@@ -1,0 +1,268 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f0f2f5, #d9e3f0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1100px;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: auto; /* To handle any overflow at 100% zoom */
+  }
+  
+  .container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  h1, h2 {
+    color: #2a2a2a;
+    font-weight: 600;
+  }
+  
+  button {
+    background-color: #5c6bc0;
+    color: #fff;
+    border: none;
+    padding: 14px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #3f51b5;
+    transform: translateY(-2px);
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"] {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  input[type="date"]:focus,
+  input[type="number"]:focus {
+    border-color: #5c6bc0;
+    background-color: #ffffff;
+  }
+  
+  input::placeholder {
+    color: #aaa;
+  }
+  
+  /* Authentication Section */
+  #auth-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+  }
+  
+  #login-form {
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  #login-form input {
+    margin-bottom: 20px;
+  }
+  
+  /* Main Section */
+  #main-section.hidden {
+    display: none;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Customers, Games, Loans Section */
+  .customers-section,
+  .games-section,
+  .loans-section {
+    margin-top: 50px;
+  }
+  
+  .customers-grid,
+  .games-grid,
+  #loaned-games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    padding-top: 20px;
+  }
+  
+  .customers-grid div,
+  .games-grid div,
+  #loaned-games-list div {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .customers-grid div:hover,
+  .games-grid div:hover,
+  #loaned-games-list div:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+  }
+  
+  .customers-grid div h4,
+  .games-grid div h4,
+  #loaned-games-list div h4 {
+    font-size: 22px;
+    color: #5c6bc0;
+    margin-bottom: 12px;
+  }
+  
+  .customers-grid div p,
+  .games-grid div p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Delete Button Styling */
+  .delete-button {
+    background-color: #e53935; /* Red color */
+    color: #fff;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 50%; /* Make it circular */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+  }
+  
+  .delete-button:hover {
+    background-color: #c62828; /* Darker red on hover */
+    transform: scale(1.1); /* Slightly enlarge the button on hover */
+  }
+  
+  /* Form Group Styling */
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+  
+  .form-group input {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .form-group input:last-child {
+    margin-right: 0;
+  }
+  
+  /* Responsive Layout for Small Screens */
+  @media (max-width: 768px) {
+    .form-group input {
+      width: 100%;
+    }
+  
+    .header h1 {
+      font-size: 24px;
+    }
+  
+    .customers-grid,
+    .games-grid,
+    #loaned-games-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Loader Animation */
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #5c6bc0;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    animation: loading 1s linear infinite;
+    margin: auto;
+  }
+  
+  /* Modal Popup */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 450px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .modal.active {
+    display: flex;
+  }
+  
+  .modal-content h3 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  

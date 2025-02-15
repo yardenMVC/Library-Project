@@ -17,6 +17,13 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
 db.init_app(app)
 
+@app.route('/admin',methods=['GET'])
+def get_admin():
+    admin = Admin.query.first()
+    if admin:
+        return jsonify({'id': admin.id, 'username': admin.username, 'password': admin.password}), 200
+    else:
+        return jsonify({'message': 'No admin found'}), 404
 
 @app.route('/games', methods=['POST'])
 def add_game():
@@ -69,20 +76,19 @@ def delete_game(game_id):
             'message': str(e)
         }), 500  
    
-@app.route('/login', methods=['POST'])  
+@app.route('/login', methods=['POST']) 
 def verify_admin():
-    try:
-        data = request.json
-        admins = Admin.query.all()
-        for admin in admins:
-            if admin.username == data['username'] and admin.password == data['password']:
-                return jsonify({'valid':True}), 201
-        return jsonify({'valid':False}), 201
-    except Exception as e:
-        return jsonify({
-            'error': 'Failed to find users',
-            'message': str(e)
-        }), 500
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+
+    admin = Admin.query.filter_by(username=username).first()
+
+    if admin and admin.password == password:
+        return jsonify({'success': True, 'message': 'Login successful'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
    
 @app.route('/loans', methods=['GET'])
 def get_loaned_games():
@@ -228,8 +234,18 @@ def add_admin():
     db.session.commit()
     return jsonify({'message': 'Admin added to database.'}), 201
    
-if __name__ == "__main__":
+if __name__ =='__main__':
     with app.app_context():
-        db.create_all()
-        app.run(debug=True)
+        db.create_all()  # Create all database tables defined in your  models(check the models folder)
 
+    with app.test_client() as test:
+
+    # GET test here
+        get_response = test.get('/games')
+        print("\nTesting GET /games endpoint:")
+        print(f"Response: {get_response.data}")
+        get_response = test.get('/admin')
+        print("\nTesting GET /admin endpoint:")
+        print(f"Response: {get_response.data}")
+
+    app.run(debug=True)  # start the flask application in debug mode

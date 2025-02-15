@@ -13,14 +13,14 @@ async function login() {
             password: password
         });
  
-        if (response.data && response.data.valid){
+        if (response.data && response.data.success){
             localStorage.setItem("isLoggedIn", "true");
             document.getElementById("auth-section").style.display = "none";
             const mainSection = document.getElementById("main-section");
             mainSection.classList.remove("hidden");
             mainSection.style.display = "block";
             getGames();
-            getLoanedGames();
+            getLoans();
             getCustomers();
         }
         else{
@@ -50,17 +50,16 @@ async function logout() {
 async function getGames() {
     try {
         const response = await axios.get('http://127.0.0.1:5000/games');
-        const booksList = document.getElementById('games-list');
-        booksList.innerHTML = ''; // Clear existing list
+        const gamesList = document.getElementById('games-list');
+        gamesList.innerHTML = ''; // Clear existing list
 
         response.data.games.forEach(game => {
-            booksList.innerHTML += `
+            gamesList.innerHTML += `
                 <div class="game-card">
                     <h3>${game.title}</h3>
                     <p>Genre: ${game.genre}</p>
                     <p>Price: ${game.price}</p>
                     <p>Quantity: ${game.quantity}</p>
-                    <p>${game.loan_status}</p> 
                     <button onclick = "deleteGame(${game.id})">Delete</button>
                 </div>
 
@@ -74,12 +73,12 @@ async function getGames() {
 }
 async function addGame() {
     const title = document.getElementById('game-title').value;
-    const author = document.getElementById('game-genre').value;
-    const year_published = document.getElementById('game-price').value;
-    const types = document.getElementById('game-quantity').value;
+    const genre = document.getElementById('game-genre').value;
+    const price = document.getElementById('game-price').value;
+    const quantity = document.getElementById('game-quantity').value;
 
     try {
-        await axios.post('http://127.0.0.1:5000/books', {
+        await axios.post('http://127.0.0.1:5000/games', {
             title: title,
             genre: genre,
             price: price,
@@ -105,7 +104,7 @@ async function deleteGame(game_id) {
         await axios.delete(`http://127.0.0.1:5000/games/${game_id}`);  
         alert('Game deleted successfully!');
         getGames();
-        getLoanedGames();
+        getLoans();
         getCustomers();
     }
     catch(error){
@@ -152,7 +151,7 @@ async function addCustomer() {
         document.getElementById('customer-phone').value = '';
  
         getGames();
-        getLoanedGames();
+        getLoans();
         getCustomers();
        
         alert('Customer added successfully!');
@@ -166,7 +165,7 @@ async function deleteCustomer(customer_id) {
         await axios.delete(`http://127.0.0.1:5000/customers/${customer_id}`);  
         alert('Customer deleted successfully!');
         getGames();
-        getLoanedGames();
+        getLoans();
         getCustomers();
     }
     catch(error){
@@ -179,17 +178,18 @@ async function getLoans() {
     try {
         const response = await axios.get('http://127.0.0.1:5000/loans');
         const loansList = document.getElementById('loans-list');
+        const loans=response.data.loans
         loansList.innerHTML = '';
  
-        response.data.loans.forEach(loan => {
+        loans.forEach(loan => {
             loansList.innerHTML += `
-                <div class="game-card">
-                    <h3>${loans.title}</h3>
-                    <p>Customer ID: ${loans.customer_id}</p>
-                    <p>Game ID: ${loans.game_id}</p>
-                    <p>Loan Date: ${loans.loan_date}</p>
-                    <p>Return Date: ${loans.return_date}</p>
-                    <button onclick = "deleteLoan(${loans.loan_id})">Return</button>
+                <div class="form-group">
+                    <h3>${loan.title}</h3>
+                    <p>Customer ID: ${loan.customer_id}</p>
+                    <p>Game ID: ${loan.game_id}</p>
+                    <p>Loan Date: ${loan.loan_date}</p>
+                    <p>Return Date: ${loan.return_date}</p>
+                    <button onclick = "deleteLoan(${loan.loan_id})">Return</button>
                 </div>
             `;
         });
@@ -245,7 +245,7 @@ async function deleteLoan(loan_id) {
         await axios.delete(`http://127.0.0.1:5000/loans/${loan_id}`);  
         alert('Game returned successfully!');
         getGames();
-        getLoanedGames();
+        getLoans();
         getCustomers();
     }
     catch(error){
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("main-section").style.display = "block";
  
         getGames();
-        getLoanedGames();
+        getLoans();
         getCustomers();
     }
 });
