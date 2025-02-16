@@ -31,6 +31,7 @@ def interact_with_form():
         name_field = wait.until(
             EC.presence_of_element_located((By.ID, "username"))
         )  # Wait until name field is present
+
         name_field.send_keys("rortheWomen")
         password_find=driver.find_element(By.ID, "password")
         password_find.send_keys("1234")
@@ -39,7 +40,17 @@ def interact_with_form():
         i=0
         wait = WebDriverWait(driver, 10)
         while i!=len(list):
-            list[i][0]
+            game_name=list[i][0]
+            game_genre-list[i][1]
+            game_price=list[i][2]
+            game_quantity=list[i][3]
+            game_name = wait.until(
+            EC.presence_of_element_located((By.ID, "game-title"))
+          ) 
+            name_field.send_keys(list[i][0])
+            
+
+
 
 
 
