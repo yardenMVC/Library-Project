@@ -77,7 +77,7 @@ def delete_game(game_id):
         }), 500  
    
 @app.route('/login', methods=['POST']) 
-def verify_admin():
+def login():
     data = request.json
     username = data.get('username')
     password = data.get('password')
@@ -91,7 +91,7 @@ def verify_admin():
         return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
    
 @app.route('/loans', methods=['GET'])
-def get_loaned_games():
+def get_loans():
     try:
         loans = Loan.query.all()
  
@@ -131,6 +131,7 @@ def delete_loan(loan_id):
        
         game = Game.query.get(del_loan.game_id)
         game.loan_status = False
+        game.quantity=game.quantity+1
  
         db.session.delete(del_loan)
         db.session.commit()
@@ -152,11 +153,13 @@ def add_loan():
     if not game.loan_status:
         new_loan = Loan(
         customer_id=data['customer_id'],
-        game_id=data['game_id'],  
+        game_id=data['game_id'],
+
         loan_date=loanDate,
         return_date=returnDate
         )
         game.loan_status = True
+        game.quantity=game.quantity-1
         db.session.add(new_loan)
         db.session.commit()
  

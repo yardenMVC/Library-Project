@@ -4,8 +4,8 @@ from datetime import datetime
 
 class Loan(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    game_id = db.Column(db.Integer, db.ForeignKey('game.id'),nullable=False)
-    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'),nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('game.id',ondelete="CASCADE"),nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id',ondelete="CASCADE"),nullable=False)
     loan_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     return_date = db.Column(db.DateTime)
 

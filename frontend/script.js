@@ -57,9 +57,11 @@ async function getGames() {
             gamesList.innerHTML += `
                 <div class="game-card">
                     <h3>${game.title}</h3>
+                    <p>ID:${game.id}
                     <p>Genre: ${game.genre}</p>
                     <p>Price: ${game.price}</p>
                     <p>Quantity: ${game.quantity}</p>
+                    <p>loan_status: ${game.loan_status}
                     <button onclick = "deleteGame(${game.id})">Delete</button>
                 </div>
 
@@ -76,6 +78,11 @@ async function addGame() {
     const genre = document.getElementById('game-genre').value;
     const price = document.getElementById('game-price').value;
     const quantity = document.getElementById('game-quantity').value;
+    if (!title || !genre || !price || !quantity) {
+        alert('Please fill in all fields');
+        return;
+    }
+  
 
     try {
         await axios.post('http://127.0.0.1:5000/games', {
@@ -99,6 +106,7 @@ async function addGame() {
         alert('Failed to add game');
     }
 }
+
 async function deleteGame(game_id) {
     try {
         await axios.delete(`http://127.0.0.1:5000/games/${game_id}`);  
@@ -138,6 +146,12 @@ async function addCustomer() {
     const name = document.getElementById('customer-name').value;
     const email = document.getElementById('customer-email').value;
     const phone = document.getElementById('customer-phone').value;
+    if (!name || !email || !phone) {
+        alert('Please fill in all fields');
+        return;
+
+    }
+
  
     try {
         await axios.post('http://127.0.0.1:5000/customers', {
@@ -204,6 +218,12 @@ async function addLoan() {
     const customer_id = document.getElementById('customer-id-loan').value;
     const loan_date = document.getElementById('loan-date').value;
     const return_date = document.getElementById('return-date').value;
+    if (!game_id || !customer_id || !loan_date || return_date) {
+        alert('Please fill in all fields');
+        return;
+
+    }
+
    
  
     try 
@@ -259,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("auth-section").style.display = "none";
         document.getElementById("main-section").classList.remove("hidden");
         document.getElementById("main-section").style.display = "block";
- 
+
         getGames();
         getLoans();
         getCustomers();
