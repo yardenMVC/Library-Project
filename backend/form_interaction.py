@@ -24,12 +24,9 @@ def interact_with_form():
    
 
     try:
-        # Open the website
-        # Navigate to the specified URL
+       
         driver.get("http://127.0.0.1:5500/frontend/index.html")
-        # time.sleep(2)  # Pause for 2 seconds to let the page load
-
-        # Create a wait object with 10-second timeout
+     
         wait = WebDriverWait(driver, 30)
 
      
@@ -41,7 +38,7 @@ def interact_with_form():
         login_button.click()
         try:
             alert = driver.switch_to.alert
-            alert.accept()  # Accept the alert
+            alert.accept() 
             print("Alert accepted")
         except:
             print("No alert appeared")
@@ -50,7 +47,7 @@ def interact_with_form():
       
         df = pd.read_excel(file_path) 
         wait = WebDriverWait(driver, 30)
-        # Wait for the main section to be visible after login
+
       
     
 
@@ -71,7 +68,15 @@ def interact_with_form():
             add_game_button = driver.find_element(By.XPATH, "//button[text()='Add Game']")
             add_game_button.click()
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "games-list")))
-            time.sleep(1)
+            try:
+                alert = WebDriverWait(driver, 5).until(EC.alert_is_present())
+                alert.accept()
+                print("")
+            except:
+                print("")
+
+
+            time.sleep(3)
 
 
     except Exception as e:
